@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="row text-uppercase">
+    <div class="col-md-12">
+      <div class="card mx-auto">
+        <div class="card-body">
+          <h2 class="card-title mb-3 text-center">{{ ticket.title }}</h2>
+
+          <div class="row">
+            <div class="col">
+              <b>Code: </b> {{ ticket.ticket_number }}
+            </div>
+            <div class="col">
+              <b>Assigned To: </b>{{ ticket.assigned_to }}
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col">
+              <b>Created By: </b> {{ ticket.created_by }}
+            </div>
+
+            <div class="col">
+              <b>Date Created: </b>{{ ticket.date_created }}
+            </div>
+          </div>
+
+          <br />
+
+          <div class="row">
+            <div class="col">
+              {% if ticket.resolved %}
+                <b>Status:</b><td>
+                  <span class="badge bg-success">Completed</span>
+                </td>
+              {% else %}
+                <b>Status:</b> <td>
+                  <span class="badge bg-danger">Active</span>
+                </td>
+              {% endif %}
+            </div>
+            <div class="col">
+              <b>Accepted Date:</b> {{ ticket.accepted_date }}
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+{% endblock %}

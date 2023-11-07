@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+
+
+
+    <title>Django Help Desk System</title>
+  </head>
+  <body style="font-family: Arial, Helvetica, sans-serif;">
+    {% if request.user.is_customer %}
+      <nav class="navbar navbar-expand-lg" style="background-color: #2862E7;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'dashboard' %}" style="color: white;">Django Help Desk System</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'ticket_queue' %}" style="color: white;">Ticket Queue</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'workspace' %}" style="color: white;">Workspace</a>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">Manage Tickets</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <a class="dropdown-item" href="{% url 'all_close_tickets' %}">Close Tickets</a>
+                  </li>
+
+                </ul>
+              </li>
+            </ul>
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true" style="color: white;">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+
+            <a href="{% url 'logout' %}" class="btn btn-lg"><i class="fa-solid fa-arrow-right-from-bracket" style="color: white;"></i></a>
+          </div>
+        </div>
+      </nav>
+    {% elif request.user.is_engineer %}
+      <nav class="navbar navbar-expand-lg" style="background-color: #2862E7;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'dashboard' %}" style="color: white;">Django Help Desk System</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#" style="color: white;">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'create_ticket' %}" style="color: white;">Create Ticket</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'all_tickets' %}" style="color: white;">View Tickets</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true" style="color: white;">Disabled</a>
+              </li>
+            </ul>
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true" style="color: white;">{{ request.user.first_name }}</a>
+            <a href="{% url 'logout' %}" class="btn btn-lg"><i class="fa-solid fa-arrow-right-from-bracket" style="color: white;"></i></a>
+          </div>
+        </div>
+      </nav>
+    {% endif %}
+
+    <div class="container mt-5">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show mx-auto" role="alert">
+            <b>{{ message }}</b>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% block content %}
+
+      {% endblock %}
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+  </body>
+</html>
+

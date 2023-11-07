@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-mb-12">
+        <br />
+
+        <h5 class="card-title mb-3 text-center text-uppercase">List Ticket</h5>
+        <hr />
+        <br />
+        <table class="table table-success table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Número</th>
+              <th scope="col">Ticket ID</th>
+              <th scope="col">Title Ticket</th>
+              <th scope="col">Created By</th>
+              <th scope="col">Created On</th>
+              <th scope="col">Assigned To</th>
+              <th scope="col">Status</th>
+              <th scope="col">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ticket in tickets %}
+              <tr>
+                <td>
+                  <small>{{ ticket.id }}</small>
+                </td>
+                <td>
+                  <small>{{ ticket.ticket_number }}</small>
+                </td>
+                <td>{{ ticket.title }}</td>
+                <td>{{ ticket.created_by }}</td>
+                <td>{{ ticket.date_created }}</td>
+                {% if ticket.assigned_to %}
+                  <td>{{ ticket.assigned_to }}</td>
+                {% else %}
+                  <td>Not Assigned</td>
+                {% endif %}
+                {% if ticket.ticket_status == 'Active' %}
+                  <td>
+                    <span class="badge bg-secondary">Active</span>
+                  </td>
+                {% elif ticket.ticket_status == 'Pending' %}
+                  <td>
+                    <span class="badge bg-warning">Pending</span>
+                  </td>
+                {% elif ticket.ticket_status == 'Completed' %}
+                  <td><span class="badge bg-success">Completed</span></td>
+                {% endif %}
+                <td>
+                  <!--  -->
+                  <a href="{% url 'ticket_details' ticket.pk %}" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-info"></i></a>
+
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-uppercase" id="exampleModalLabel">Ticket Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body"></div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
